@@ -1,0 +1,20 @@
+
+# Exclude this file
+.zipignore
+
+# Exclude reserved files
+data/plugin.db
+data/logs/
+data/config.json
+data/plugin.log
+ucrm.json
+
+
+server/App/Settings.php
+
+# Everything we need for the client-side app is bundled, so we do not need the source code!
+client/
+
+
+router.php
+.env

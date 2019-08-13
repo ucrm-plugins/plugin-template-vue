@@ -1,0 +1,29 @@
+{
+    "version": "1",
+    "information": {
+        "name": "plugin-template",
+        "displayName": "Plugin Template",
+        "description": "A simple Plugin template for use with UCRM.",
+        "url": "https://github.com/ucrm-plugins/plugin-template",
+        "version": "1.0.2",
+        "ucrmVersionCompliancy": {
+            "min": "2.16.4",
+            "max": null
+        },
+        "unmsVersionCompliancy": {
+            "min": "1.0.0-beta.8",
+            "max": null
+        },
+        "author": "Ryan Spaeth"
+    },
+    "menu": [
+        {
+            "key": "Add-Ons",
+            "label": "Plugin Template",
+            "type": "admin",
+            "target": "iframe"
+        }
+    ],
+    "configuration": []
+}
+
