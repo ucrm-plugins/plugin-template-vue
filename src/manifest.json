@@ -1,10 +1,10 @@
 {
     "version": "1",
     "information": {
-        "name": "plugin-template",
+        "name": "plugin-template-vue",
         "displayName": "Plugin Template",
         "description": "A simple Plugin template for use with UCRM.",
-        "url": "https://github.com/ucrm-plugins/plugin-template",
+        "url": "https://github.com/ucrm-plugins/plugin-template-vue",
         "version": "1.0.2",
         "ucrmVersionCompliancy": {
             "min": "2.16.4",

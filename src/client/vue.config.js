@@ -1,11 +1,17 @@
 
-
+const manifest = require("../manifest.json");
 const path = require("path");
-const fs = require("fs");
 
+/**
+ * Gets the current plugin name from the manifest.json file.
+ * @returns {string}
+ */
 function pluginName()
 {
-    return path.basename(path.resolve(__dirname, "../../"));
+    //return path.basename(path.resolve(__dirname, "../../"));
+    console.log(manifest.information.name);
+
+    return manifest.information.name;
 }
 
 
@@ -22,11 +28,24 @@ function publicPath()
 
 module.exports = {
 
-    publicPath: publicPath(),
+    publicPath: (process.env.NODE_ENV === "production" ? "/_plugins/" + pluginName() : "") + "/public/",
 
     indexPath: "../index.html",
-    //assetsDir: "../app/",
+
     outputDir: "../public/",
+
+    configureWebpack: {
+        // Merged into the final Webpack config
+        plugins: [
+            //new PurgeCssPlugin({
+            //    paths: glob.sync([
+            //        path.join(__dirname, './index.html'),
+            //        path.join(__dirname, './src/**/*.vue'),
+            //        path.join(__dirname, './src/**/*.js')
+            //    ])
+            //})
+        ]
+    },
 
 
     chainWebpack: function(config)
@@ -76,15 +95,17 @@ module.exports = {
             // alongside webpack-dev-server during development.  This will simulate the "/public" experience in the
             // UCRM front-end.
 
-            /*
-            "^/public$": {
+
+            "^/public/": {
                 target: "http://localhost:3000/",
                 changeOrigin: false,
                 pathRewrite: {
-                    "^/public$": "/public/"
+                    "^/public/": "/"
                 }
             },
-            */
+
+
+
 
 
 
