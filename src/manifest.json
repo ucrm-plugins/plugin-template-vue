@@ -2,10 +2,10 @@
     "version": "1",
     "information": {
         "name": "plugin-template-vue",
-        "displayName": "Plugin Template",
-        "description": "A simple Plugin template for use with UCRM.",
+        "displayName": "Plugin Template (VueJS)",
+        "description": "A project template for developing UCRM Plugins.",
         "url": "https://github.com/ucrm-plugins/plugin-template-vue",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "ucrmVersionCompliancy": {
             "min": "2.16.4",
             "max": null
@@ -19,7 +19,7 @@
     "menu": [
         {
             "key": "Add-Ons",
-            "label": "Plugin Template",
+            "label": "Plugin Template (VueJS)",
             "type": "admin",
             "target": "iframe"
         }

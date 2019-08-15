@@ -10,6 +10,7 @@
         <button class="btn btn-primary" @click="items = items2">Change</button>
         -->
 
+        <!--
         <div class="md:flex bg-blue-500">
             <div class="md:flex-shrink-0">
                 <img class="rounded-lg md:w-56" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase">
@@ -20,6 +21,7 @@
                 <p class="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
             </div>
         </div>
+        -->
 
     </div>
 </template>

@@ -30,7 +30,7 @@
 <script>
 
     import grapes from "grapesjs";
-    import "grapesjs/dist/css/grapes.min.css";
+    //import "grapesjs/dist/css/grapes.min.css";
 
     import "grapesjs-preset-webpage"
     import "grapesjs-tooltip"
@@ -245,6 +245,7 @@
 
 <!--suppress CssFloatPxLength, CssUnusedSymbol -->
 <style lang="stylus">
+    @import "~grapesjs/dist/css/grapes.min.css"
     //@import "../../../node_modules/grapesjs/dist/css/grapes.min.css";
 
     rem2px(value)
