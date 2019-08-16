@@ -71,6 +71,7 @@ use UCRM\HTTP\Twig\Extensions\PluginExtension;
 use UCRM\HTTP\Slim\Middleware\QueryStringRouter;
 use UCRM\HTTP\Slim\Middleware\PluginAuthentication;
 use UCRM\Sessions\SessionUser;
+use UCRM\REST\Endpoints\Version;
 
 use Slim\Container;
 use Slim\Router;
@@ -137,7 +138,11 @@ try
 {
     // Get the Version from the REST API and log the information to the Plugin's logs.
     Log::info("Using REST URL:\n    '".$restUrl."'");
-    $version = \UCRM\REST\Endpoints\Version::get();
+
+    /** @var Version $version */
+    $version = Version::get();
+    //define("UCRM_VERSION",  $version->getVersion());
+
     Log::info("REST API Test : '".$version."'");
 }
 catch(\Exception $e)
@@ -315,3 +320,18 @@ $app->add(new QueryStringRouter("/../index.html"));
  */
 
 //#endregion
+
+
+
+
+if(defined("UCRM_VERSION"))
+{
+    $path = realpath(__DIR__. "/bootstrap/" . UCRM_VERSION .".php");
+
+    if($path)
+    {
+        /** @noinspection PhpIncludeInspection */
+        include $path;
+    }
+
+}
