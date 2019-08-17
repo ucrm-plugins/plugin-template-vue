@@ -2,7 +2,7 @@
 <template>
     <div class="h-100">
 
-        <HtmlDesigner v-model="html"></HtmlDesigner>
+        <HtmlDesigner v-model="html" :dynamics="dynamics"></HtmlDesigner>
 
 
     </div>
@@ -11,6 +11,8 @@
 <script>
 
     import HtmlDesigner from "../components/HtmlDesigner/HtmlDesigner";
+    //const HtmlDesigner = () => import(/* webpackChunkName: "html-designer" */ "../components/HtmlDesigner/HtmlDesigner");
+
 
     export default {
 
@@ -18,8 +20,8 @@
 
         components: {
             HtmlDesigner
-            //QueryBuilder,
-            //VueJsonPretty,
+
+
         },
 
         data () {
@@ -27,8 +29,15 @@
 
                 editor: null,
 
-                html: ""
+                html: "",
 
+                dynamics: [
+                    {
+                        name: "user",
+                        label: "User",
+
+                    }
+                ]
 
             }
         },

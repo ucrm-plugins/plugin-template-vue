@@ -3524,11 +3524,6 @@ grapesjs-preset-webpage@^0.1.11:
     grapesjs-plugin-filestack "^0.1.1"
     grapesjs-plugin-forms "^0.3.5"
 
-grapesjs-tooltip@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/grapesjs-tooltip/-/grapesjs-tooltip-0.1.5.tgz#07fbaf268193b763c15ac59fd4acb6cb527f26a7"
-  integrity sha512-0B9B2KNlo5HxhbbbnKV8hhoGMTy2N+Hwlw5f6lB8oOO4S//aCnGQiTcOPqAw0TTU39Lam6bMXqIfU0rBuJ7xuQ==
-
 grapesjs@^0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/grapesjs/-/grapesjs-0.15.3.tgz#eed706625a6c97fe93f2799932bebdea0b10e4d4"

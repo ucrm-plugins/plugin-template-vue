@@ -11,7 +11,12 @@ const purgeCss = require("@fullhuman/postcss-purgecss")({
     ],
 
     // Include any special characters you're using in your class names here, default should be fine!
-    defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+    defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+
+    whitelistPatterns: [
+        // Necessary for GrapesJS Editor...
+        /gjs-/, /sp-/,
+    ],
 
 });
 

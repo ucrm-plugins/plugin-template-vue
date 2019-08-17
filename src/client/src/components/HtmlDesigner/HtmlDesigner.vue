@@ -2,7 +2,7 @@
 
     <!-- CONTAINER -->
     <div
-        :id="'html-designer-' + _uid + '-container'"
+        :id="'html-designer-' + this._uid + '-container'"
         class="h-100">
 
         <!-- MOBILE -->
@@ -18,7 +18,7 @@
 
         <!-- DESIGNER -->
         <div
-            :id="'html-designer-' + _uid + '-editor'"
+            :id="'html-designer-' + this._uid + '-editor'"
             class="h-100 d-none d-sm-block border border-dark"
             v-html="value">
         </div>
@@ -29,13 +29,10 @@
 
 <script>
 
-    import grapes from "grapesjs";
-    //import "grapesjs/dist/css/grapes.min.css";
-
+    import grapesjs from "grapesjs";
     import "grapesjs-preset-webpage"
-    import "grapesjs-tooltip"
 
-    import "./components/dynamics"
+    import "./plugins/dynamics"
 
 
     export default {
@@ -79,7 +76,8 @@
 
 
 
-            this.editor = grapes.init({
+            // noinspection JSUnresolvedFunction
+            this.editor = grapesjs.init({
 
                 container: "#html-designer-" + this._uid + "-editor",
                 fromElement: true,
