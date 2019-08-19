@@ -11,7 +11,6 @@
 <script>
 
     import HtmlDesigner from "../components/HtmlDesigner/HtmlDesigner";
-    //const HtmlDesigner = () => import(/* webpackChunkName: "html-designer" */ "../components/HtmlDesigner/HtmlDesigner");
 
 
     export default {

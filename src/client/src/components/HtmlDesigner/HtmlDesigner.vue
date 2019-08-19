@@ -95,7 +95,7 @@
 
                 pluginsOpts: {
 
-                    'gjs-preset-webpage': {
+                    "gjs-preset-webpage": {
                         // options
                         blocks: [
                         ],
@@ -122,10 +122,12 @@
                     }
                 },
 
+                /*
                 blocks: [
 
 
                 ]
+                */
 
 
 
@@ -139,6 +141,7 @@
             });
 
 
+            /*
             this.editor.BlockManager.add(
                 "dynamic-field",
                 {
@@ -151,6 +154,7 @@
 
                 }
             );
+            */
 
 
 

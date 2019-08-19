@@ -1,63 +1,68 @@
-import grapes from 'grapesjs';
-import loadComponents from './components';
-import loadBlocks from './blocks';
-import {
-    countdownRef
-} from './consts';
 
-export default grapes.plugins.add('dynamics', (editor, options = {}) => {
-    let opts = options;
+
+
+import grapes from "grapesjs";
+import loadTypes from "./types";
+import loadComponents from "./components";
+import loadBlocks from "./blocks";
+
+import { pluginName, dynamicField } from "./consts";
+
+export default grapes.plugins.add(pluginName, function(editor, options = {})
+{
+    //let opts = options;
 
     let defaults = {
 
         blocks: [
-            countdownRef // 'countdown'
+            dynamicField.name,
+            // Add other plugin related blocks here...
         ],
+
 
         // Default style
         defaultStyle: true,
 
-        // Default start time, eg. '2018-01-25 00:00'
-        startTime: '',
+        fieldClassPrefix: dynamicField.classPrefix,
+        fieldLabel: dynamicField.label,
+        fieldCategory: dynamicField.category,
 
-        // Text to show when the countdown is ended
-        endText: 'EXPIRED',
+        fieldObjectDefault: "user",
+        fieldPropertyDefault: "firstName",
 
-        // Date input type, eg, 'date', 'datetime-local'
-        dateInputType: 'date',
-
-        // Countdown class prefix
-        countdownClsPfx: 'countdown',
-
-        // Countdown label
-        labelCountdown: 'Countdown',
-
-        // Countdown category label
-        labelCountdownCategory: 'Extra',
-
-        // Days label text used in component
-        labelDays: 'days',
-
-        // Hours label text used in component
-        labelHours: 'hours',
-
-        // Minutes label text used in component
-        labelMinutes: 'minutes',
-
-        // Seconds label text used in component
-        labelSeconds: 'seconds',
     };
 
     // Load defaults
-    for (let name in defaults) {
-        if (!(name in opts))
-            opts[name] = defaults[name];
+    for (let name in defaults)
+    {
+        if (!(name in options))
+            options[name] = defaults[name];
     }
 
-    // Add components
-    loadComponents(editor, opts);
+    loadTypes(editor, options);
 
     // Add components
-    loadBlocks(editor, opts);
+    loadComponents(editor, options);
+
+    // Add components
+    loadBlocks(editor, options);
+
+    /*
+    editor.RichTextEditor.add("dynamic-field", {
+        icon: `<select class="gjs-field">
+		        <option value="">Select</option>
+                <option value="firstName">firstName</option>
+                <option value="lastName">lastName</option>
+                
+            </select>
+        `,
+
+        // Bind the 'result' on 'change' listener
+        event: 'change',
+        result: (rte, action) => rte.insertHTML("{% " + action.btn.firstChild.value + " %}"),
+        // Reset the select on change
+        update: (rte, action) => { action.btn.firstChild.value = "";}
+    });
+    */
 
 });
