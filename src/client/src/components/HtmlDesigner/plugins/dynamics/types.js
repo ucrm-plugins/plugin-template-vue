@@ -6,33 +6,56 @@ export default function(editor, opt = {})
 {
     const defaultType = editor.DomComponents.getType("default");
 
-
-    // Define a component with `textable` property
-    // noinspection SpellCheckingInspection
-    editor.DomComponents.addType("var-placeholder",
+    /**
+     *
+     * @param {Object} styleObj
+     * @returns {string}
+     */
+    const styleObjectToString = function(styleObj)
     {
-        //isComponent: (el) => el.tagName === "DIV",
+        let styles = [];
 
+        Object.keys(styleObj).forEach(function(key)
+        {
+            styles.push(`${key}:${styleObj[key]}`);
+        });
+
+        return styles.join(";");
+    };
+
+
+
+    // Define a component with `textable` property...
+    editor.DomComponents.addType("dynamic-field",
+    {
+
+
+
+        isType: function(value)
+        {
+            if(value && value.type === "dynamic-field")
+                return value;
+        },
+
+
+        // Setup the component's model.
         model:  {
 
+            // Set the model defaults.
             defaults: {
 
+                // Is allowed to be dropped inside a text component.
                 textable: true,
 
+                // Can not have anything else dropped inside of itself.
                 droppable: false,
 
+                style: {
+                    display: "inline-block",
+                },
+
+                // Define the component's traits.
                 traits: [
-                    {
-                        type: "select",
-                        label: "Container",
-                        name: "field-container",
-                        options: [
-                            "none",
-                            "div",
-                            "span",
-                            "p",
-                        ],
-                    },
                     {
                         type: "select",
                         label: "Object",
@@ -58,36 +81,37 @@ export default function(editor, opt = {})
 
                 ],
 
-                class: "dynamics-field",
-
+                // Set default values for the same traits.
                 attributes: {
-
-
-                    "field-container": "div",
                     "field-object": "user",
                     "field-property": "firstName",
-
                 },
 
 
+
+
+
             },
 
 
-
-
+            /**
+             *
+             * @returns {string}
+             */
             toHTML: function()
             {
+
                 const attributes = this.getAttributes();
+                const styles = styleObjectToString(this.getStyle());
 
-
-                if(attributes["field-container"] === "none")
-                    return `{% ${attributes["field-object"]}.${attributes["field-property"]} %}`;
-
-                const open = `<${attributes["field-container"]}>`;
-                const close = `</${attributes["field-container"]}>`;
-
-                return `${open}{% ${attributes["field-object"]}.${attributes["field-property"]} %}${close}`.minify();
+                return `
+                    <div style="${styles}">
+                        {% ${attributes["field-object"]}.${attributes["field-property"]} %}
+                    </div>
+                `;
             },
+
+
 
         },
 
@@ -99,58 +123,52 @@ export default function(editor, opt = {})
 
             init: function()
             {
-                //this.model.attributes.style
-                //console.log();
+                let self = this;
 
+                /*
 
+                // Get the current model styles, likely none at the moment!
+                let style = this.model.getStyle();
 
+                // Merge the "common" styles with the current model styles.
+                style = Object.assign({ display: "inline-block" }, style);
 
-                //console.log(this.model);
+                // Assign the combined styles to the model.
+                this.model.setStyle(style);
+
+                */
 
                 this.listenTo(this.model, "change:attributes", function()
                 {
                     //console.log("attribute changed!");
-
                 });
 
-                let self = this;
-
-                this.listenTo(this.model, "change:style", function()
+                this.listenTo(this.model, "change:style", function(model, style)
                 {
-                    //console.log("style changed!");
-                    //self.render();
-
-                    //const style = this.model.get("style");
-                    //this.model.set("style", "display:inline; " + style)
-
-                    const style = this.$el.attr("style");
-                    console.log(style);
-
-
-                    this.$el.attr("style", "display:inline-block;" + (style !== "" ? " " : "") + style);
-
-                    //const component = editor.getSelected();
-                    //component.setStyle(style);
-
-                    //console.log();
-
+                    self.render();
+                    //this.$el.css("background-color", "lightblue");
                 })
             },
 
             render: function ()
             {
                 // Apply the defaults!
-                defaultType.view.prototype.render.apply(this); //, arguments);
+                defaultType.view.prototype.render.apply(this, arguments);
 
                 const {model, el} = this;
-                const attributes = model.getAttributes();
 
+                const attributes = model.getAttributes();
                 const fieldObject = attributes["field-object"];
                 const fieldProperty = attributes["field-property"];
 
                 const $el = $(el);
                 $el.html(`${fieldObject}.${fieldProperty}`);
-                $el.attr("style", "display:inline-block;");
+                $el.css("background-color", "lightblue");
+                //$el.css("border-radius", "0.25rem");
+
+
+
+
 
                 return this;
 
@@ -163,16 +181,15 @@ export default function(editor, opt = {})
 
     editor.on("component:selected", function()
     {
-        const selected = this.getEditor().getSelected();
+        const selected = editor.getSelected();
 
-        if(selected.attributes.type === "var-placeholder")
+        if(selected.attributes.type === "dynamic-field")
         {
             const openSmBtn = editor.Panels.getButton('views', 'open-tm');
             openSmBtn.set('active', 1);
         }
 
     });
-
 
 
 

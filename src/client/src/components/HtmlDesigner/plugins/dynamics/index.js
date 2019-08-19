@@ -3,7 +3,7 @@
 
 import grapes from "grapesjs";
 import loadTypes from "./types";
-import loadComponents from "./components";
+//import loadComponents from "./components";
 import loadBlocks from "./blocks";
 
 import { pluginName, dynamicField } from "./consts";
@@ -42,7 +42,7 @@ export default grapes.plugins.add(pluginName, function(editor, options = {})
     loadTypes(editor, options);
 
     // Add components
-    loadComponents(editor, options);
+    //loadComponents(editor, options);
 
     // Add components
     loadBlocks(editor, options);

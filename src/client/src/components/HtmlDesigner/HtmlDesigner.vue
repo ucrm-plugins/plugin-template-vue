@@ -24,10 +24,11 @@
         </div>
 
 
+        <!--
         <form id="test-form" class="test-form" action="http://grapes.16mb.com/s" method="POST" style="display:none">
             <div class="putsmail-c">
                 <a href="https://putsmail.com/" target="_blank">
-                    <!--<img src="./img/putsmail.png" style="opacity:0.85;" />-->Test
+                    <img src="./img/putsmail.png" style="opacity:0.85;" />
                 </a>
                 <div class="gjs-sm-property" style="font-size: 10px">
                     Test delivering offered by <a class="nl-link" href="https://litmus.com/" target="_blank">Litmus</a> with <a class="nl-link" href="https://putsmail.com/" target="_blank">Putsmail</a>
@@ -54,6 +55,7 @@
             <input type="hidden" name="body">
             <button class="gjs-btn-prim gjs-btn-import" style="width: 100%">SEND</button>
         </form>
+        -->
 
 
     </div>
@@ -111,7 +113,9 @@
 
 
             // noinspection JSUnresolvedFunction
-            this.editor = grapesjs.init({
+            let editor = this.editor = grapesjs.init({
+
+                forceClass: false,
 
                 container: "#html-designer-" + this._uid + "-editor",
                 fromElement: true,
@@ -182,6 +186,17 @@
             });
 
 
+            editor.on("component:selected", function()
+            {
+                const selected = editor.getSelected();
+
+                if(selected.attributes.type === "wrapper")
+                {
+                    const openSmBtn = editor.Panels.getButton('views', 'open-blocks');
+                    openSmBtn.set('active', 1);
+                }
+
+            });
 
 
 
@@ -287,6 +302,9 @@
 
             $(function()
             {
+
+
+
                 // Set our own tooltips...
 
                 $(".gjs-pn-buttons span.gjs-pn-btn, .gjs-blocks-c div.gjs-block")
@@ -365,6 +383,10 @@
 <style lang="stylus">
 
     @import "~grapesjs/dist/css/grapes.min.css"
+
+    // Hide the Selector Settings from the StyleManager!
+    .gjs-clm-tags
+        display none
 
 
     // -- LAYOUT, BUTTONS & PANELS -------------------------------------------------------------------------------------

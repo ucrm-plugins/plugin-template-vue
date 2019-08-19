@@ -4,13 +4,12 @@ export default function(editor, opt = {})
 {
 
     // Use the component in blocks
-    editor.BlockManager.add("simple-block", {
+    editor.BlockManager.add("data-field", {
         label: "Data Field",
         category: "Dynamics",
         select: true,
         content: {
-            type: "var-placeholder",
-
+            type: "dynamic-field",
         },
         attributes: {
             class: "fa fa-database",
