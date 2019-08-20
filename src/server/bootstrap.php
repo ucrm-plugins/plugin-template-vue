@@ -59,6 +59,7 @@ if (isset($_SERVER) && isset($_SERVER["REQUEST_URI"]))
 
 require_once __DIR__ . "/vendor/autoload.php";
 
+use App\Middleware\WebhookMiddleware;
 use MVQN\Localization\Translator;
 use MVQN\Localization\Exceptions\TranslatorException;
 use MVQN\REST\RestClient;
@@ -295,7 +296,7 @@ $app->add(new PluginAuthentication($container,
 ));
 
 // Use our custom QueryStringRouter middleware to route our Plugin URLs, setting the default URL...
-$app->add(new QueryStringRouter("/../index.html"));
+$app->add(new QueryStringRouter( /*"/../index.html"*/ "/"));
 
 /**
  * WARNING: The above QueryStringRouter middleware bypasses the current restrictions that UCRM places on Plugins with
@@ -321,6 +322,8 @@ $app->add(new QueryStringRouter("/../index.html"));
 
 //#endregion
 
+
+$app->add(new WebhookMiddleware($app));
 
 
 

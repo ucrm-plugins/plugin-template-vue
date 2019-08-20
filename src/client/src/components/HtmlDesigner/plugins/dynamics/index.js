@@ -4,6 +4,7 @@
 import grapes from "grapesjs";
 import loadTypes from "./types";
 //import loadComponents from "./components";
+import loadTraits from "./traits";
 import loadBlocks from "./blocks";
 
 import { pluginName, dynamicField } from "./consts";
@@ -11,6 +12,8 @@ import { pluginName, dynamicField } from "./consts";
 export default grapes.plugins.add(pluginName, function(editor, options = {})
 {
     //let opts = options;
+
+    //const data = options.data;
 
     let defaults = {
 
@@ -39,7 +42,10 @@ export default grapes.plugins.add(pluginName, function(editor, options = {})
             options[name] = defaults[name];
     }
 
+    loadTraits(editor, options);
+
     loadTypes(editor, options);
+
 
     // Add components
     //loadComponents(editor, options);

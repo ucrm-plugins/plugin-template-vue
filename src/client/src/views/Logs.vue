@@ -433,6 +433,7 @@
         created() {
 
             // Do nothing!
+            console.log("Logs");
 
         },
 

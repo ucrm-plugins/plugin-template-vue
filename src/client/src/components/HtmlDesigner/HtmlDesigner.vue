@@ -81,6 +81,11 @@
 
             value: String,
 
+            dynamics: {
+                type: Object,
+                default: function() { return {}; },
+            },
+
         },
 
         watch: {
@@ -99,6 +104,7 @@
 
                 editor: null,
 
+
             }
         },
 
@@ -106,11 +112,19 @@
 
         },
 
+        created: function()
+        {
+            //console.log(this.dynamics);
+
+
+
+
+
+
+        },
+
         mounted: function()
         {
-
-
-
 
             // noinspection JSUnresolvedFunction
             let editor = this.editor = grapesjs.init({
@@ -131,6 +145,10 @@
                 ],
 
                 pluginsOpts: {
+
+                    "dynamics": {
+                        "data": this.dynamics,
+                    }
 
                     /*
                     "gjs-preset-webpage": {
@@ -294,6 +312,7 @@
             ]);
 
             //#endregion
+
 
 
 

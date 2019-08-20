@@ -30,13 +30,7 @@
 
                 html: "",
 
-                dynamics: [
-                    {
-                        name: "user",
-                        label: "User",
-
-                    }
-                ]
+                dynamics: {},
 
             }
         },
@@ -62,6 +56,34 @@
         },
 
         created() {
+            console.log("HtmlDesignerDemo");
+
+            this.dynamics =
+            {
+                admin:
+                {
+                    id: 1,
+                    firstName: "Ryan",
+                    lastName: "Spaeth",
+                },
+                user:
+                {
+                    id: 2,
+                    firstName: "Michelle",
+                    lastName: "Spaeth",
+                },
+                ticket:
+                {
+                    id: 1234,
+                    adminId: 1,
+                    userId: 2,
+                    subject: "This is a test"
+                }
+
+            }
+
+
+
         },
 
         mounted: function()

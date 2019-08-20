@@ -1,3 +1,7 @@
+import { styleObjectToString } from "../styles";
+import { flatten, resolve } from "../helpers";
+
+// noinspection JSUnusedLocalSymbols
 /**
  * Export the plugin's "types" function.
  * @param {Object} editor
@@ -5,25 +9,15 @@
  */
 export default function(editor, options = {})
 {
+    let fieldObjects = flatten(options.data);
+    console.log(resolve("admin.firstName", options.data));
+
+
+
+
+
     // Get a quick reference to the default Component, for later use.
     const defaultType = editor.DomComponents.getType("default");
-
-    /**
-     * Converts a style Object to it's inline style string representation.
-     * @param {Object} style
-     * @returns {string}
-     */
-    const styleObjectToString = function(style)
-    {
-        let styles = [];
-
-        Object.keys(style).forEach(function(key)
-        {
-            styles.push(`${key}:${style[key]}`);
-        });
-
-        return styles.join(";");
-    };
 
     // Add our new type.
     editor.DomComponents.addType("dynamic-field",
@@ -66,21 +60,28 @@ export default function(editor, options = {})
                         type: "select",
                         label: "Object",
                         name: "field-object",
+                        options: Object.keys(fieldObjects),
+
+                        /*
                         options: [
                             "admin",
                             "user",
                             "ticket",
                             "job",
                         ],
+                        */
                     },
 
                     {   // The property on that object from which to get our data.
-                        type: "select",
+                        type: "select-group",
                         label: "Property",
                         name: "field-property",
                         options: [
-                            "firstName",
-                            "lastName",
+                            { group: "Names", id: "firstName", name: "First Name" },
+                            { group: "Names", id: "middleName", name: "Middle Name" },
+                            { group: "Names", id: "lastName", name: "Last Name" },
+                            { group: "Addresses", id: "street1", name: "Street1" },
+                            { group: "Addresses", id: "street2", name: "Street2" },
                         ],
                     },
 
@@ -105,7 +106,7 @@ export default function(editor, options = {})
                 attributes:
                 {
                     "field-object": "user",
-                    "field-property": "firstName",
+                    "field-property": "street1",
                     "field-default": "",
                     "field-condition": "",
 

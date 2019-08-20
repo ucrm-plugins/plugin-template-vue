@@ -338,6 +338,7 @@
         },
 
         created() {
+            console.log("QueryBuilderDemo");
         },
 
         mounted: function()

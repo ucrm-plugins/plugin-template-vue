@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 require_once __DIR__ . "/server/vendor/autoload.php";
 require_once __DIR__ . "/server/bootstrap.php";
 
@@ -38,6 +39,10 @@ use App\Controllers;
 
     // TODO: Add any additional configuration you need here...
 
+
+
+
+
     // =================================================================================================================
     // CUSTOM ROUTES
     // =================================================================================================================
@@ -66,7 +71,6 @@ use App\Controllers;
 
 
 
-
     // =================================================================================================================
     // COMMON ROUTES
     // NOTE: These are common controllers used in the plugin template.
@@ -90,6 +94,37 @@ use App\Controllers;
 
     // Append a route handler for PHP scripts.
     new Common\ScriptController($app);
+
+    $app->get("/",
+
+        function ( /** @noinspection PhpUnusedParameterInspection */ Request $request, Response $response, array $args)
+        use ($container)
+        {
+            //echo "TESTING!";
+            chdir(__DIR__."/public/");
+
+            //return $response->withJson([ "name" => $args["name"], "description" => "This is an example JSON route!" ]);
+            return $response->write(file_get_contents(__DIR__ . "/index.html"));
+        }
+
+    );
+
+    $app->post("/",
+
+        function ( /** @noinspection PhpUnusedParameterInspection */ Request $request, Response $response, array $args)
+        use ($container)
+        {
+            //echo "TESTING!";
+
+            return $response->withJson([ "public" => "success" ]);
+
+            //return $response->withRedirect("public.php?/webhook");
+
+
+
+        }
+
+    );
 
     // =================================================================================================================
     // APPLICATION EXECUTION

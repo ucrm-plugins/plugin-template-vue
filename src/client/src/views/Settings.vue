@@ -82,7 +82,7 @@
 
         created: function()
         {
-
+            console.log("Settings");
 
 
 
