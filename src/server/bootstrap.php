@@ -31,9 +31,10 @@ if (isset($_SERVER) && isset($_SERVER["REQUEST_URI"]))
     $pluginBase = "/_plugins/${pluginName}/";
 
     // Strip the Plugin's base from the URI, so we have the actual request URI.
+    // NOTES:
+    // - We also remove the "/crm" prefix, if it happens to be present!
+    // - We only remove the base from the URI for examination, not from the actual request!
     $uri = preg_replace("#(/crm)?${pluginBase}#", "/", $_SERVER["REQUEST_URI"]);
-
-    // NOTE: Here we only remove the base from the URI for examination, not from the actual request!
 
     // IF the request is any partial variation of the front-controller's root route...
     if ($uri === "/public.php?" ||
@@ -41,7 +42,7 @@ if (isset($_SERVER) && isset($_SERVER["REQUEST_URI"]))
         $uri === "/public.php?/index.html" ||
         strpos($uri, "/public.php?/index.html") !== false)
     {
-        // ...THEN we need to "clean" the URI, unset any query parameters...
+        // ...THEN we need to "clean" the URI, and unset any query parameters...
         $uri = $_SERVER["REQUEST_URI"] = "/public.php";
         unset($_SERVER["QUERY_STRING"]);
 
@@ -50,7 +51,7 @@ if (isset($_SERVER) && isset($_SERVER["REQUEST_URI"]))
         exit();
     }
 
-    // NOW, we can let the front-controller handle the request directly...
+    // OTHERWISE, we can let the front-controller handle the request directly...
 }
 
 //#endregion
@@ -255,7 +256,11 @@ $container['notFoundHandler'] = function (Container $container)
 
 // NOTE: Middleware is handled in ascending order, starting with the last middleware added!
 
-// Add context information here for use by the Logging system for ALL requests...
+/***********************************************************************************************************************
+ * Logging
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Add context information here for use by the Logging system for ALL requests...
+ */
 $app->add(function (Request $request, Response $response, $next) use ($app) {
     Log::debug(
         $request->getAttribute("vRoute"), Log::HTTP, [
@@ -266,75 +271,92 @@ $app->add(function (Request $request, Response $response, $next) use ($app) {
     return $next($request, $response);
 });
 
+/***********************************************************************************************************************
+ * Authentication
+ * ---------------------------------------------------------------------------------------------------------------------
+ * NOTES:
+ * - We setup the default permissions to allow the "Admin Group" only.
+ * - And then load any existing groups into the allowed permissions.
+ *
+ * TODO: Add the ability to allow "Users" in addition to "Groups".
+ */
 $allowedGroups = [ "Admin Group" ];
 
+// IF a permissions file exists...
 if(file_exists(__DIR__ . "/../data/permissions.json"))
 {
+    // ...THEN open it and parse the data.
     $json = json_decode(file_get_contents(__DIR__ . "/../data/permissions.json"), true);
 
+    // IF there are no parsing errors, THEN add any permitted groups to the allowed permissions.
     if(json_last_error() === JSON_ERROR_NONE)
-    {
         $allowedGroups = $json["groups"];
-    }
 }
 
 // Handle Plugin-wide Authentication using our custom PluginAuthentication middleware...
 $app->add(new PluginAuthentication($container,
     function(SessionUser $user) use ($allowedGroups)
     {
-        // NOTE: Apply your own logic here and return TRUE/FALSE to authenticate successfully/unsuccessfully!
-        return in_array(
-            $user->getUserGroup(),
-            $allowedGroups
-            /*
-            [
-                "Admin Group",
-            ]
-            */
-        );
+        // NOTES:
+        // - Apply your own logic here and return TRUE/FALSE to authenticate successfully/unsuccessfully.
+        // - The default uses any permissions configured in the front-end's "Settings" tab.
+        // - This applies to ALL routes, unless overridden in the route directly!
+        return in_array($user->getUserGroup(), $allowedGroups);
     }
 ));
 
-// Use our custom QueryStringRouter middleware to route our Plugin URLs, setting the default URL...
-$app->add(new QueryStringRouter( /*"/../index.html"*/ "/"));
-
-/**
- * WARNING: The above QueryStringRouter middleware bypasses the current restrictions that UCRM places on Plugins with
- * multiple pages and should be used at he developer's discretion!
+/***********************************************************************************************************************
+ * Front-Controller
+ * ---------------------------------------------------------------------------------------------------------------------
+ * WARNING: The following QueryStringRouter middleware bypasses the current restrictions that UCRM places on Plugins
+ * with multiple pages and should be used at the developer's discretion!
  *
  * The QueryStringRouter handles URLs as follows:
  * - The Plugin's 'public.php' script acts as a front-controller that parses the query-string for the requested URL.
- *
  *
  * EXAMPLE URLs:
  * - /public.php                                            => Loads the default route, as configured above.
  * - /public.php?/                                          => Same as the previous.
  * - /public.php?/index.html                                => Same as the previous, fully qualified URL.
- * - /public.php?/index.html&param1=1&param2=two            => Same as the previous, including some GET parameters.
+ * - /public.php?/index.html&param1=1&param2=two            => Same as the previous, parameters stripped!
  *
  * - /public.php?[route][&param=value...]                   => All other suffixes are handled by Slim Framework routes.
+ *   > /public.php?/                                        => Will route match "/".
+ *   > /public.php?/example                                 => Will route match "/example".
+ *   > /public.php?/test&data=123                           => Will route match "/test" with query string "data=123".
  *
- * - /public.php?/#/                                        => Our VueJS 'index.html' page and using vue-router syntax.
- *
+ * - /public.php#[route]                                    => Our VueJS 'index.html' page and using vue-router syntax.
+ *   > /public.php#/editor                                  => Will vue-route match "/editor"
+ *   > /public.php#/logs                                    => Will vue-route match "/logs"
+ *   > /public.php#/settings                                => Will vue-route match "/settings"
  *
  * Visit https://github.com/mvqn/ucrm-plugin-sdk for additional information on my extended UCRM SDK.
  */
+$app->add(new QueryStringRouter( /*"/../index.html"*/ "/"));
+
+/***********************************************************************************************************************
+ * Webhook Events
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Handles Webhook Events, as needed!
+ */
+$app->add(new WebhookMiddleware($app));
 
 //#endregion
 
+//#region Additional Bootstrapping (by Version)
 
-$app->add(new WebhookMiddleware($app));
-
-
-
+// IF the UCRM version is defined...
 if(defined("UCRM_VERSION"))
 {
+    // ...THEN check to see if a bootstrap file with that version exists.
     $path = realpath(__DIR__. "/bootstrap/" . UCRM_VERSION .".php");
 
+    // IF it does, THEN execute that script as well.
     if($path)
     {
         /** @noinspection PhpIncludeInspection */
         include $path;
     }
-
 }
+
+//#endregion
