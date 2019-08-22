@@ -724,16 +724,16 @@
         },
         {
             "name": "mvqn/rest",
-            "version": "1.4.5",
+            "version": "1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mvqn/rest.git",
-                "reference": "23c099fd1f8a16628a47435a7120f1b38aef0fc5"
+                "reference": "36baf5df851ddfdbd6f51a8c5c92ff2ff4b7d779"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mvqn/rest/zipball/23c099fd1f8a16628a47435a7120f1b38aef0fc5",
-                "reference": "23c099fd1f8a16628a47435a7120f1b38aef0fc5",
+                "url": "https://api.github.com/repos/mvqn/rest/zipball/36baf5df851ddfdbd6f51a8c5c92ff2ff4b7d779",
+                "reference": "36baf5df851ddfdbd6f51a8c5c92ff2ff4b7d779",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +767,7 @@
                 }
             ],
             "description": "A simple REST Client library for interfacing with generic REST Endpoints.",
-            "time": "2019-07-11T04:40:01+00:00"
+            "time": "2019-08-19T20:04:07+00:00"
         },
         {
             "name": "mvqn/twig",
@@ -812,16 +812,16 @@
         },
         {
             "name": "mvqn/ucrm-plugin-sdk",
-            "version": "1.3.4",
+            "version": "1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mvqn/ucrm-plugin-sdk.git",
-                "reference": "8b0a1de42e111d7df1d02ba4aaa7c7867b088a99"
+                "reference": "f4ae8d168b6b5c6621d08cdd981de449be5f9e31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mvqn/ucrm-plugin-sdk/zipball/8b0a1de42e111d7df1d02ba4aaa7c7867b088a99",
-                "reference": "8b0a1de42e111d7df1d02ba4aaa7c7867b088a99",
+                "url": "https://api.github.com/repos/mvqn/ucrm-plugin-sdk/zipball/f4ae8d168b6b5c6621d08cdd981de449be5f9e31",
+                "reference": "f4ae8d168b6b5c6621d08cdd981de449be5f9e31",
                 "shasum": ""
             },
             "require": {
@@ -868,7 +868,7 @@
                 }
             ],
             "description": "An alternative UCRM SDK designed to ease Plugin development.",
-            "time": "2019-08-16T03:59:15+00:00"
+            "time": "2019-08-21T22:45:26+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2649,20 +2649,23 @@
         },
         {
             "name": "slim/slim",
-            "version": "3.12.1",
+            "version": "3.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "eaee12ef8d0750db62b8c548016d82fb33addb6b"
+                "reference": "200c6143f15baa477601879b64ab2326847aac0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/eaee12ef8d0750db62b8c548016d82fb33addb6b",
-                "reference": "eaee12ef8d0750db62b8c548016d82fb33addb6b",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/200c6143f15baa477601879b64ab2326847aac0b",
+                "reference": "200c6143f15baa477601879b64ab2326847aac0b",
                 "shasum": ""
             },
             "require": {
                 "container-interop/container-interop": "^1.2",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
                 "nikic/fast-route": "^1.0",
                 "php": ">=5.5.0",
                 "pimple/pimple": "^3.0",
@@ -2688,24 +2691,24 @@
             ],
             "authors": [
                 {
-                    "name": "Rob Allen",
-                    "email": "rob@akrabat.com",
-                    "homepage": "http://akrabat.com"
-                },
-                {
                     "name": "Josh Lockhart",
                     "email": "hello@joshlockhart.com",
                     "homepage": "https://joshlockhart.com"
                 },
                 {
-                    "name": "Gabriel Manricks",
-                    "email": "gmanricks@me.com",
-                    "homepage": "http://gabrielmanricks.com"
-                },
-                {
                     "name": "Andrew Smith",
                     "email": "a.smith@silentworks.co.uk",
                     "homepage": "http://silentworks.co.uk"
+                },
+                {
+                    "name": "Rob Allen",
+                    "email": "rob@akrabat.com",
+                    "homepage": "http://akrabat.com"
+                },
+                {
+                    "name": "Gabriel Manricks",
+                    "email": "gmanricks@me.com",
+                    "homepage": "http://gabrielmanricks.com"
                 }
             ],
             "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs",
@@ -2716,7 +2719,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2019-04-16T16:47:29+00:00"
+            "time": "2019-08-20T18:46:05+00:00"
         },
         {
             "name": "slim/twig-view",

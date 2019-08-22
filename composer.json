@@ -35,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "server/App/"
+            "App\\": "src/server/App/"
         }
     },
     "autoload-dev": {
@@ -43,6 +43,8 @@
         }
     },
     "scripts": {
+
+
 
         "sync": [
             "upm sync"
@@ -62,21 +64,21 @@
 
 
         "client:run": [
-            "cd client/ && yarn serve"
+            "cd src/client/ && yarn serve"
         ],
         "client:update": [
-            "cd client/ && yarn upgrade"
+            "cd src/client/ && yarn upgrade"
         ],
         "client:build": [
-            "cd client/ && yarn build"
+            "cd src/client/ && yarn build"
         ],
         "client:deploy": [
             "@client:update",
-            "cd client/ && yarn build"
+            "cd src/client/ && yarn build"
         ],
 
         "server:run": [
-            "@php -S 0.0.0.0:80 -t . router.php"
+            "@php -S 0.0.0.0:80 -t src/ src/router.php"
         ],
         "server:update": [
             "@composer --no-interaction --verbose update"
@@ -88,8 +90,9 @@
 
     },
     "config": {
-        "vendor-dir": "server/vendor/",
+        "vendor-dir": "src/server/vendor/",
         "process-timeout": 0
 
     }
+
 }
