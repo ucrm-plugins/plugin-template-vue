@@ -343,20 +343,26 @@ $app->add(new WebhookMiddleware($app));
 
 //#endregion
 
-//#region Additional Bootstrapping (by Version)
+//#region Additional Bootstrapping
+
+// IF a custom bootstrap file exists, THEN include it!
+if($customPath = realpath(__DIR__ . "/bootstrap.inc.php"))
+    /** @noinspection PhpIncludeInspection */
+    include $customPath;
 
 // IF the UCRM version is defined...
 if(defined("UCRM_VERSION"))
 {
-    // ...THEN check to see if a bootstrap file with that version exists.
-    $path = realpath(__DIR__. "/bootstrap/" . UCRM_VERSION .".php");
-
-    // IF it does, THEN execute that script as well.
-    if($path)
-    {
+    // ...AND IF a version bootstrap file exists, THEN include it!
+    if($versionPath = realpath(__DIR__. "/bootstrap/" . UCRM_VERSION .".php"))
         /** @noinspection PhpIncludeInspection */
-        include $path;
-    }
+        include $versionPath;
+
+    // ...AND IF a custom version bootstrap file exists, THEN include it!
+    if($customVersionPath = realpath(__DIR__. "/bootstrap/" . UCRM_VERSION .".inc.php"))
+        /** @noinspection PhpIncludeInspection */
+        include $customVersionPath;
 }
 
 //#endregion
+
