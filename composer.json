@@ -1,6 +1,6 @@
 {
-    "name": "ucrm-plugins/plugin-template",
-    "description": "A simple Plugin template for use with UCRM.",
+    "name": "ucrm-plugins/plugin-template-vue",
+    "description": "A project template for developing UCRM Plugins.",
     "license": "MIT",
     "authors": [
         {
