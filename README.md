@@ -5,6 +5,7 @@ A template to use for development of UCRM Plugins.
 ## Installation
 
 
+
 1. Download the [Plugin](https://github.com/ucrm-plugins/revenue-report/raw/master/revenue-report.zip) and add it to the
 System/Plugins in your UCRM.
 2. No configuration is needed, simply click "Enable".
