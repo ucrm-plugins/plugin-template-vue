@@ -1,8 +1,9 @@
-# Revenue Report (EX) Plugin for UCRM
+# Plugin Template (VueJS)
 
-An extended and modified version of the Revenue Report plugin for UCRM.
+A template to use for development of UCRM Plugins. 
 
 ## Installation
+
 
 1. Download the [Plugin](https://github.com/ucrm-plugins/revenue-report/raw/master/revenue-report.zip) and add it to the
 System/Plugins in your UCRM.
